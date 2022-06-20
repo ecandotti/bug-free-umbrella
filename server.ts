@@ -1,8 +1,46 @@
 import 'dotenv/config'
 // import { Gpio } from 'onoff'
 import cron from 'node-cron'
+import Twig from 'twig'
 
-import { sendWeeklySummary } from './utils/sendWeeklySummary'
+// import { sendWeeklySummary } from './sendWeeklySummary'
+
+const start_date = '01/01/2022'
+const end_date = '06/01/2022'
+const number = 1
+
+const probe = [
+    {
+        date: '01/01/2022',
+        status: 1,
+        date_event: '12:34',
+    },
+    {
+        date: '02/01/2022',
+        status: 1,
+        date_event: '12:34',
+    },
+    {
+        date: '03/01/2022',
+        status: 1,
+        date_event: '12:34',
+    },
+    {
+        date: '04/01/2022',
+        status: 1,
+        date_event: '12:34',
+    },
+    {
+        date: '05/01/2022',
+        status: 0,
+        date_event: '12:34',
+    },
+    {
+        date: '06/01/2022',
+        status: 1,
+        date_event: '12:34',
+    },
+]
 
 // Initialisation GPIOs
 // const probe1 = new Gpio(4, 'in')
@@ -13,16 +51,16 @@ import { sendWeeklySummary } from './utils/sendWeeklySummary'
 // const probe6 = new Gpio(25, 'in')
 
 // Initialisation cron-tab
-cron.schedule(
-    '* * * * Monday',
-    () => {
-        console.log('Send weekly summary')
-        sendWeeklySummary()
-    },
-    {
-        timezone: 'Europe/Paris',
-    },
-).start()
+// cron.schedule(
+//     '* * * * Monday',
+//     () => {
+//         console.log('Send weekly summary')
+//         sendWeeklySummary()
+//     },
+//     {
+//         timezone: 'Europe/Paris',
+//     },
+// ).start()
 
 // probe1.watch((err, value) => {
 //     console.log('From proble1 : ', { value })
@@ -63,3 +101,8 @@ cron.schedule(
 //         console.log('False alarm !')
 //     }
 // }
+
+Twig.renderFile('./weeklySummary.twig', { probe, start_date, end_date, number }, (err, result) => {
+    console.log({ err })
+    console.log({ result })
+})

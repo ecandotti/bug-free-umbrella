@@ -32,9 +32,11 @@
             <tr>
                 <td>{{ info.date }}</td>
                 <td>
-                    {{ if info.status == 1 }}
-                    <div>{{ info.status }} - {{ info.event.date }}</div>
-                    {{ else }} {{ info.status }} {{ endif }}
+                {% if info.status == 0 %}
+                    <div>❌ - {{ info.date_event }}</div>
+                {% else %}
+                    ✅
+                {% endif %}
                 </td>
             </tr>
         {% endfor %}
