@@ -1,46 +1,20 @@
 import 'dotenv/config'
 // import { Gpio } from 'onoff'
+import SQLite from 'sqlite3'
 import cron from 'node-cron'
-import Twig from 'twig'
 
-// import { sendWeeklySummary } from './sendWeeklySummary'
+import { sendMail } from './utils/sendMail'
+import { addProbeEvent } from './utils/addProbeEvent'
 
-const start_date = '01/01/2022'
-const end_date = '06/01/2022'
-const number = 1
+import { REPORT_TYPE } from 'configs/constants'
 
-const probe = [
-    {
-        date: '01/01/2022',
-        status: 1,
-        date_event: '12:34',
-    },
-    {
-        date: '02/01/2022',
-        status: 1,
-        date_event: '12:34',
-    },
-    {
-        date: '03/01/2022',
-        status: 1,
-        date_event: '12:34',
-    },
-    {
-        date: '04/01/2022',
-        status: 1,
-        date_event: '12:34',
-    },
-    {
-        date: '05/01/2022',
-        status: 0,
-        date_event: '12:34',
-    },
-    {
-        date: '06/01/2022',
-        status: 1,
-        date_event: '12:34',
-    },
-]
+export const db = new SQLite.Database('./databases/alcm-analyzer.sql')
+
+db.serialize(() => {
+    db.run(
+        'CREATE TABLE IF NOT EXISTS logs (probe_id INT NOT NULL, status INT NOT NULL, created_at TIMESTAMP(0) NOT NULL)',
+    )
+})
 
 // Initialisation GPIOs
 // const probe1 = new Gpio(4, 'in')
@@ -55,16 +29,23 @@ const probe = [
 //     '* * * * Monday',
 //     () => {
 //         console.log('Send weekly summary')
-//         sendWeeklySummary()
+//         sendMail(REPORT_TYPE)
 //     },
 //     {
 //         timezone: 'Europe/Paris',
 //     },
 // ).start()
 
-// probe1.watch((err, value) => {
+// probe1.watch((err: any, value: number) => {
 //     console.log('From proble1 : ', { value })
 //     console.log('From proble1 : ', { err })
+//     // if (err) {
+//     //     console.log('Impossible de lire la sonde 1')
+//     // }
+
+//     // if (value === 1) {
+//     //     isAgainActive(probe1)
+//     // }
 // })
 
 // probe2.watch((err, value) => {
@@ -92,17 +73,13 @@ const probe = [
 //     console.log('From proble6 : ', { err })
 // })
 
-// const isAgainActive = (probe: Gpio) => {
-//     const probeState = probe.readSync()
-//     if (probeState === 1) {
-//         console.log('Send SMS !')
-//         console.log('Write event in logbook !')
-//     } else {
-//         console.log('False alarm !')
-//     }
-// }
+const isAgainActive = (probe: any) => {
+    const probeState = probe.readSync()
 
-Twig.renderFile('./weeklySummary.twig', { probe, start_date, end_date, number }, (err, result) => {
-    console.log({ err })
-    console.log({ result })
-})
+    if (probeState === 1) {
+        console.log('Send email !')
+        addProbeEvent(probe)
+    } else {
+        console.log('False alarm !')
+    }
+}

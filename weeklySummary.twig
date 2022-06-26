@@ -14,31 +14,35 @@
         border-bottom: 1px solid #ccc;
     }
 </style>
+<div>Récapitualitif du {{ start_date }} - {{ end_date }}</div>
 <table border="1">
-    <thead>
-        <tr>
-            <th colspan="2">
-                Récapitualitif du {{ start_date }} - {{ end_date }} |
-                <strong>Sonde {{ number }}</strong>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th>Date</th>
-            <th>Récapitualitif</th>
-        </tr>
-        {% for info in probe %}    
+    {% set index = 1 %}
+    {% for probe in probes %}    
+        <thead>
             <tr>
-                <td>{{ info.date }}</td>
-                <td>
-                {% if info.status == 0 %}
-                    <div>❌ - {{ info.date_event }}</div>
-                {% else %}
-                    ✅
-                {% endif %}
-                </td>
+                <th colspan="2">
+                    <strong>Sonde {{ index }}</strong>
+                </th>
             </tr>
-        {% endfor %}
-    </tbody>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Date</th>
+                <th>Récapitualitif</th>
+            </tr>
+            <tr>
+                {% for item in probe %}
+                    <td>{{ item.date }}</td>
+                    <td>
+                    {% if item.status == 0 %}
+                        <div>❌ - {{ item.date_event }}</div>
+                    {% else %}
+                        ✅
+                    {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+        {% set index = index + 1 %}
+    {% endfor %}
 </table>
