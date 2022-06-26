@@ -1,5 +1,5 @@
 import 'dotenv/config'
-// import { Gpio } from 'onoff'
+import { Gpio } from 'onoff'
 import SQLite from 'sqlite3'
 import cron from 'node-cron'
 
@@ -17,7 +17,7 @@ db.serialize(() => {
 })
 
 // Initialisation GPIOs
-// const probe1 = new Gpio(4, 'in')
+const probe1 = new Gpio(4, 'in')
 // const probe2 = new Gpio(27, 'in')
 // const probe3 = new Gpio(22, 'in')
 // const probe4 = new Gpio(23, 'in')
@@ -36,17 +36,17 @@ db.serialize(() => {
 //     },
 // ).start()
 
-// probe1.watch((err: any, value: number) => {
-//     console.log('From proble1 : ', { value })
-//     console.log('From proble1 : ', { err })
-//     // if (err) {
-//     //     console.log('Impossible de lire la sonde 1')
-//     // }
+probe1.watch((err: any, value: number) => {
+    console.log('From proble1 : ', { value })
+    console.log('From proble1 : ', { err })
+    // if (err) {
+    //     console.log('Impossible de lire la sonde 1')
+    // }
 
-//     // if (value === 1) {
-//     //     isAgainActive(probe1)
-//     // }
-// })
+    // if (value === 1) {
+    //     isAgainActive(probe1)
+    // }
+})
 
 // probe2.watch((err, value) => {
 //     console.log('From proble2 : ', { value })
