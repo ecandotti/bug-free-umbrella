@@ -6,16 +6,16 @@ import { sendMail } from './sendMail'
 
 export const addProbeEvent = (probeName: any) => {
     const currentDate = new Date()
+    // const probeId = probeName._gpio
 
-    console.log(probeName)
+    console.log(probeName._gpio)
 
     // sendMail(EVENT_TYPE)
 
     // db.run(
-    //     'INSERT INTO logs (probe_id, status, created_at) VALUES ($probe_id, $status, $created_at)',
+    //     'INSERT INTO logs (probe_id, created_at) VALUES ($probe_id, $created_at)',
     //     {
     //         $probe_id: 2,
-    //         $status: 0,
     //         $created_at: currentDate,
     //     },
     // )

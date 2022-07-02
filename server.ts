@@ -108,10 +108,8 @@ probe6.watch((err, value) => {
 
 const isAgainActive = (probe: any) => {
     const probeState = probe.readSync()
-    console.log({ probeState })
 
     if (probeState === 1) {
-        console.log('Send email !')
         addProbeEvent(probe)
     } else {
         console.log('False alarm !')
