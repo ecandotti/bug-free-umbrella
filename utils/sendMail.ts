@@ -4,7 +4,7 @@ import { createTransport } from 'nodemailer'
 import { weeklyTemplatePath } from '../configs/constants'
 import { eventSignalPath } from '../configs/constants'
 
-export const sendMail = async (emailType: number) => {
+export const sendMail = async (emailType: number, probeId: number = 0) => {
     const transporter = createTransport({
         service: 'gmail',
         host: 'smtp.gmail.com',
@@ -37,7 +37,7 @@ export const sendMail = async (emailType: number) => {
         Twig.renderFile(
             eventSignalPath,
             {
-                fridge_number: 1,
+                probeId,
             },
             async (err, result) => {
                 await transporter.sendMail({
