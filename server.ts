@@ -106,7 +106,7 @@ probe6.watch((err, value) => {
     }
 })
 
-const isAgainActive = (probe: any) => {
+const isAgainActive = (probe: Gpio) => {
     const probeState = probe.readSync()
 
     if (probeState === 1) {

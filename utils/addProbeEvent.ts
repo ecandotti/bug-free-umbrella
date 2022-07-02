@@ -10,6 +10,7 @@ export const addProbeEvent = (Gpio: any) => {
 
     console.log({ Gpio })
     console.log(Gpio.gpio)
+    console.log(Gpio._gpio)
 
     // sendMail(EVENT_TYPE)
 
