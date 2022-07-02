@@ -4,7 +4,7 @@ import { createTransport } from 'nodemailer'
 import { weeklyTemplatePath } from '../configs/constants'
 import { eventSignalPath } from '../configs/constants'
 
-export const sendMail = async (emailType: number, probeId: number = 0) => {
+export const sendMail = async (emailType: number, probeId: any = 0) => {
     const transporter = createTransport({
         service: 'gmail',
         host: 'smtp.gmail.com',
