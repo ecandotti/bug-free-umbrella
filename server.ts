@@ -18,11 +18,11 @@ db.serialize(() => {
 
 // Initialisation GPIOs
 const probe1 = new Gpio(4, 'in')
-// const probe2 = new Gpio(27, 'in')
-// const probe3 = new Gpio(22, 'in')
-// const probe4 = new Gpio(23, 'in')
-// const probe5 = new Gpio(24, 'in')
-// const probe6 = new Gpio(25, 'in')
+const probe2 = new Gpio(27, 'in')
+const probe3 = new Gpio(22, 'in')
+const probe4 = new Gpio(23, 'in')
+const probe5 = new Gpio(24, 'in')
+const probe6 = new Gpio(25, 'in')
 
 // Initialisation cron-tab
 // cron.schedule(
@@ -48,30 +48,30 @@ probe1.watch((err: any, value: number) => {
     // }
 })
 
-// probe2.watch((err, value) => {
-//     console.log('From proble2 : ', { value })
-//     console.log('From proble2 : ', { err })
-// })
+probe2.watch((err, value) => {
+    console.log('From proble2 : ', { value })
+    console.log('From proble2 : ', { err })
+})
 
-// probe3.watch((err, value) => {
-//     console.log('From proble3 : ', { value })
-//     console.log('From proble3 : ', { err })
-// })
+probe3.watch((err, value) => {
+    console.log('From proble3 : ', { value })
+    console.log('From proble3 : ', { err })
+})
 
-// probe4.watch((err, value) => {
-//     console.log('From proble4 : ', { value })
-//     console.log('From proble4 : ', { err })
-// })
+probe4.watch((err, value) => {
+    console.log('From proble4 : ', { value })
+    console.log('From proble4 : ', { err })
+})
 
-// probe5.watch((err, value) => {
-//     console.log('From proble5 : ', { value })
-//     console.log('From proble5 : ', { err })
-// })
+probe5.watch((err, value) => {
+    console.log('From proble5 : ', { value })
+    console.log('From proble5 : ', { err })
+})
 
-// probe6.watch((err, value) => {
-//     console.log('From proble6 : ', { value })
-//     console.log('From proble6 : ', { err })
-// })
+probe6.watch((err, value) => {
+    console.log('From proble6 : ', { value })
+    console.log('From proble6 : ', { err })
+})
 
 const isAgainActive = (probe: any) => {
     const probeState = probe.readSync()
