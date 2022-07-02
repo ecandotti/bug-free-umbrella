@@ -17,12 +17,12 @@ db.serialize(() => {
 })
 
 // Initialisation GPIOs
-const probe1 = new Gpio(4, 'in')
-const probe2 = new Gpio(27, 'in')
-const probe3 = new Gpio(22, 'in')
-const probe4 = new Gpio(23, 'in')
-const probe5 = new Gpio(24, 'in')
-const probe6 = new Gpio(25, 'in')
+const probe1 = new Gpio(4, 'in', 'both')
+const probe2 = new Gpio(27, 'in', 'both')
+const probe3 = new Gpio(22, 'in', 'both')
+const probe4 = new Gpio(23, 'in', 'both')
+const probe5 = new Gpio(24, 'in', 'both')
+const probe6 = new Gpio(25, 'in', 'both')
 
 // Initialisation cron-tab
 // cron.schedule(
