@@ -4,11 +4,11 @@ import { db } from '../server'
 
 import { sendMail } from './sendMail'
 
-export const addProbeEvent = (probeName: any) => {
+export const addProbeEvent = ({ Gpio }: any) => {
     const currentDate = new Date()
-    // const probeId = probeName._gpio
+    // const probeId = Gpio._gpio
 
-    console.log(probeName._gpio)
+    console.log(Gpio._gpio)
 
     // sendMail(EVENT_TYPE)
 
