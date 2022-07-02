@@ -17,12 +17,12 @@ db.serialize(() => {
 })
 
 // Initialisation GPIOs
-const probe1 = new Gpio(4, 'in', 'both')
-const probe2 = new Gpio(27, 'in', 'both')
-const probe3 = new Gpio(22, 'in', 'both')
-const probe4 = new Gpio(23, 'in', 'both')
-const probe5 = new Gpio(24, 'in', 'both')
-const probe6 = new Gpio(25, 'in', 'both')
+const probe1 = new Gpio(4, 'in', 'both') //
+const probe2 = new Gpio(27, 'in', 'both') // LeftSide - 7
+const probe3 = new Gpio(22, 'in', 'both') // LeftSide - 8
+const probe4 = new Gpio(23, 'in', 'both') // RightSide - 8
+const probe5 = new Gpio(24, 'in', 'both') // RightSide - 9
+const probe6 = new Gpio(25, 'in', 'both') // RightSide - 11
 
 // Initialisation cron-tab
 // cron.schedule(
@@ -37,44 +37,78 @@ const probe6 = new Gpio(25, 'in', 'both')
 // ).start()
 
 probe1.watch((err: any, value: number) => {
-    console.log('From proble1 : ', { value })
-    console.log('From proble1 : ', { err })
-    // if (err) {
-    //     console.log('Impossible de lire la sonde 1')
-    // }
+    if (err) {
+        console.log('Impossible de lire la sonde 1')
+    }
 
-    // if (value === 1) {
-    //     isAgainActive(probe1)
-    // }
+    if (value === 1) {
+        isAgainActive(probe1)
+    }
 })
 
 probe2.watch((err, value) => {
-    console.log('From proble2 : ', { value })
-    console.log('From proble2 : ', { err })
+    if (err) {
+        console.log('Impossible de lire la sonde 2')
+    }
+
+    if (value === 1) {
+        setTimeout(() => {
+            isAgainActive(probe2)
+        }, 5000)
+    }
 })
 
 probe3.watch((err, value) => {
-    console.log('From proble3 : ', { value })
-    console.log('From proble3 : ', { err })
+    if (err) {
+        console.log('Impossible de lire la sonde 3')
+    }
+
+    if (value === 1) {
+        setTimeout(() => {
+            isAgainActive(probe3)
+        }, 5000)
+    }
 })
 
 probe4.watch((err, value) => {
-    console.log('From proble4 : ', { value })
-    console.log('From proble4 : ', { err })
+    if (err) {
+        console.log('Impossible de lire la sonde 4')
+    }
+
+    if (value === 1) {
+        setTimeout(() => {
+            isAgainActive(probe4)
+        }, 5000)
+    }
 })
 
 probe5.watch((err, value) => {
-    console.log('From proble5 : ', { value })
-    console.log('From proble5 : ', { err })
+    if (err) {
+        console.log('Impossible de lire la sonde 5')
+    }
+
+    if (value === 1) {
+        setTimeout(() => {
+            isAgainActive(probe5)
+        }, 5000)
+    }
 })
 
 probe6.watch((err, value) => {
-    console.log('From proble6 : ', { value })
-    console.log('From proble6 : ', { err })
+    if (err) {
+        console.log('Impossible de lire la sonde 6')
+    }
+
+    if (value === 1) {
+        setTimeout(() => {
+            isAgainActive(probe6)
+        }, 5000)
+    }
 })
 
 const isAgainActive = (probe: any) => {
     const probeState = probe.readSync()
+    console.log({ probeState })
 
     if (probeState === 1) {
         console.log('Send email !')

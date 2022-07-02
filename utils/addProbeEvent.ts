@@ -9,16 +9,16 @@ export const addProbeEvent = (probeName: any) => {
 
     console.log(probeName)
 
-    sendMail(EVENT_TYPE)
+    // sendMail(EVENT_TYPE)
 
-    db.run(
-        'INSERT INTO logs (probe_id, status, created_at) VALUES ($probe_id, $status, $created_at)',
-        {
-            $probe_id: 2,
-            $status: 0,
-            $created_at: currentDate,
-        },
-    )
+    // db.run(
+    //     'INSERT INTO logs (probe_id, status, created_at) VALUES ($probe_id, $status, $created_at)',
+    //     {
+    //         $probe_id: 2,
+    //         $status: 0,
+    //         $created_at: currentDate,
+    //     },
+    // )
 
     console.log('Done !')
     return true
