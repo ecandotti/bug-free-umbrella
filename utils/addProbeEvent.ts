@@ -8,7 +8,8 @@ export const addProbeEvent = ({ Gpio }: any) => {
     const currentDate = new Date()
     // const probeId = Gpio._gpio
 
-    console.log(Gpio._gpio)
+    console.log({ Gpio })
+    console.log(Gpio.gpio)
 
     // sendMail(EVENT_TYPE)
 
