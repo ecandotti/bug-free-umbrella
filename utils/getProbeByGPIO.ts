@@ -1,6 +1,6 @@
 export const getProbeByGPIO = (GPIO: any) => {
     switch (GPIO) {
-        case 4:
+        case 17:
             return 1
         case 27:
             return 2
