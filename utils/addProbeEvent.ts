@@ -1,4 +1,4 @@
-import { EVENT_TYPE, REPORT_TYPE } from '../configs/constants'
+import { EVENT_TYPE } from '../configs/constants'
 
 import { db } from '../server'
 
@@ -10,7 +10,7 @@ export const addProbeEvent = (Gpio: any) => {
     const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ')
     const probeId = getProbeByGPIO(Gpio._gpio)
 
-    sendMail(REPORT_TYPE, probeId)
+    sendMail(EVENT_TYPE, probeId)
 
     db.run(
         'INSERT INTO logs(probe_id, created_at) VALUES(?,?)',
