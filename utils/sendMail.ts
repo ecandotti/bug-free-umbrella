@@ -29,27 +29,28 @@ export const sendMail = async (emailType: number, probeId: any = 0) => {
         db.all(
             `SELECT probe_id, created_at FROM logs WHERE created_at >= '${dateMinus7days}' AND created_at <= '${currentDate}'`,
             (error, rows) => {
+                console.log({ error })
                 rows.forEach((row: Object) => {
                     probesList.push(row)
                 })
-                console.log(probesList)
-            },
-        )
 
-        Twig.renderFile(
-            weeklyTemplatePath,
-            {
-                start_date: dateMinus7days,
-                end_date: currentDate,
-                probes: probesList,
-            },
-            async (err, result) => {
-                await transporter.sendMail({
-                    from: `"Aleaderclim Frigo Récap" <${process.env.SENDER_ADDRESS}>`,
-                    to: `enzo.candotti31@gmail.com`,
-                    subject: `Récapitilatif hebdomadaire`,
-                    html: result,
-                })
+                Twig.renderFile(
+                    weeklyTemplatePath,
+                    {
+                        start_date: dateMinus7days,
+                        end_date: currentDate,
+                        probes: probesList,
+                    },
+                    async (err, result) => {
+                        // await transporter.sendMail({
+                        //     from: `"Aleaderclim Frigo Récap" <${process.env.SENDER_ADDRESS}>`,
+                        //     to: `enzo.candotti31@gmail.com`,
+                        //     subject: `Récapitilatif hebdomadaire`,
+                        //     html: result,
+                        // })
+                        console.log(result)
+                    },
+                )
             },
         )
     }
