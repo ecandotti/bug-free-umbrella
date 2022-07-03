@@ -6,17 +6,17 @@ import cron from 'node-cron'
 import { sendMail } from './utils/sendMail'
 import { addProbeEvent } from './utils/addProbeEvent'
 
-import { REPORT_TYPE } from 'configs/constants'
+import { REPORT_TYPE } from './configs/constants'
 
 export const db = new SQLite.Database('./databases/alcm-analyzer.sql')
 
 db.serialize(() => {
     db.run(
-        'CREATE TABLE IF NOT EXISTS logs (probe_id INT NOT NULL, status INT NOT NULL, created_at TIMESTAMP(0) NOT NULL)',
+        'CREATE TABLE IF NOT EXISTS logs (id INTEGER PRIMARY KEY AUTOINCREMENT, probe_id INTEGER NOT NULL, created_at DATETIME NOT NULL)',
     )
 })
 
-// Initialisation GPIOs
+// // Initialisation GPIOs
 const probe1 = new Gpio(4, 'in', 'both') //
 const probe2 = new Gpio(27, 'in', 'both') // LeftSide - 7
 const probe3 = new Gpio(22, 'in', 'both') // LeftSide - 8
@@ -25,16 +25,16 @@ const probe5 = new Gpio(24, 'in', 'both') // RightSide - 9
 const probe6 = new Gpio(25, 'in', 'both') // RightSide - 11
 
 // Initialisation cron-tab
-// cron.schedule(
-//     '* * * * Monday',
-//     () => {
-//         console.log('Send weekly summary')
-//         sendMail(REPORT_TYPE)
-//     },
-//     {
-//         timezone: 'Europe/Paris',
-//     },
-// ).start()
+cron.schedule(
+    '* * * * Monday',
+    () => {
+        console.log('Send weekly summary')
+        sendMail(REPORT_TYPE)
+    },
+    {
+        timezone: 'Europe/Paris',
+    },
+).start()
 
 probe1.watch((err: any, value: number) => {
     if (err) {
@@ -42,7 +42,10 @@ probe1.watch((err: any, value: number) => {
     }
 
     if (value === 1) {
-        isAgainActive(probe1)
+        console.log('5s launch...')
+        setTimeout(() => {
+            isAgainActive(probe1)
+        }, 5000)
     }
 })
 
@@ -52,6 +55,7 @@ probe2.watch((err, value) => {
     }
 
     if (value === 1) {
+        console.log('5s launch...')
         setTimeout(() => {
             isAgainActive(probe2)
         }, 5000)
@@ -64,6 +68,7 @@ probe3.watch((err, value) => {
     }
 
     if (value === 1) {
+        console.log('5s launch...')
         setTimeout(() => {
             isAgainActive(probe3)
         }, 5000)
@@ -76,6 +81,7 @@ probe4.watch((err, value) => {
     }
 
     if (value === 1) {
+        console.log('5s launch...')
         setTimeout(() => {
             isAgainActive(probe4)
         }, 5000)
@@ -88,6 +94,7 @@ probe5.watch((err, value) => {
     }
 
     if (value === 1) {
+        console.log('5s launch...')
         setTimeout(() => {
             isAgainActive(probe5)
         }, 5000)
@@ -100,6 +107,7 @@ probe6.watch((err, value) => {
     }
 
     if (value === 1) {
+        console.log('5s launch...')
         setTimeout(() => {
             isAgainActive(probe6)
         }, 5000)
@@ -110,6 +118,7 @@ const isAgainActive = (probe: Gpio) => {
     const probeState = probe.readSync()
 
     if (probeState === 1) {
+        console.log('Saving event..')
         addProbeEvent(probe)
     } else {
         console.log('False alarm !')
