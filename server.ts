@@ -17,7 +17,7 @@ db.serialize(() => {
 })
 
 // // Initialisation GPIOs
-const probe1 = new Gpio(4, 'in', 'both') //
+const probe1 = new Gpio(17, 'in', 'both') //
 const probe2 = new Gpio(27, 'in', 'both') // LeftSide - 7
 const probe3 = new Gpio(22, 'in', 'both') // LeftSide - 8
 const probe4 = new Gpio(23, 'in', 'both') // RightSide - 8
