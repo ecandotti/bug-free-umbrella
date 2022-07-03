@@ -14,35 +14,33 @@
         border-bottom: 1px solid #ccc;
     }
 </style>
-<div>Récapitualitif du {{ start_date }} - {{ end_date }}</div>
+<div>Récapitualitif du {{ start_date|date("d/m/Y") }} - {{ end_date|date("d/m/Y") }}</div>
 <table border="1">
-    {% set index = 1 %}
-    {% for probe in probes %}    
-        <thead>
-            <tr>
-                <th colspan="2">
-                    <strong>Sonde {{ index }}</strong>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>Date</th>
-                <th>Récapitualitif</th>
-            </tr>
-            <tr>
-                {% for item in probe %}
-                    <td>{{ item.date }}</td>
-                    <td>
-                    {% if item.status == 0 %}
-                        <div>❌ - {{ item.date_event }}</div>
-                    {% else %}
-                        ✅
-                    {% endif %}
-                    </td>
-                {% endfor %}
-            </tr>
-        </tbody>
-        {% set index = index + 1 %}
+    {% set addDate = 0 %}
+    {% for i in 1..6 %}
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        <strong>Sonde {{ i }}</strong>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Date</th>
+                    <th>Récapitualitif</th>
+                </tr>
+        {% for probe in probes %}    
+                <tr>
+                    {% for y in 1..6 %}
+                        <td>{{ start_date|date_modify("+" ~ addDate ~ " day")|date('d/m/Y H:i') }}</td>
+                        <td>
+                            <div>❌ - {{ item.date_event }}</div>
+                        </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        {% endfor %}
+        {% set addDate = addDate + 1 %}
     {% endfor %}
 </table>
